@@ -30,7 +30,7 @@ namespace Program_3
             while (!userInput);
             
             // Instrukcja warunkowa sprawdzająca podaną liczbę.
-            if (someValue >= 0)
+            if (someValue >= 1)
             {
                 Console.WriteLine($"Liczba \"{someValue}\" jest liczbą dodatnią.");
             }
