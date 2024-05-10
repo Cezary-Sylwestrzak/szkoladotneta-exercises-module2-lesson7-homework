@@ -22,22 +22,27 @@ namespace Program_4
 
                 userInput = int.TryParse(Console.ReadLine(), out someYear);
 
+                Console.WriteLine(string.Empty);
+
                 if (!userInput)
                 {
                     Console.WriteLine("Wprowadzona wartość nie jest wartością liczbową, ponów próbę używając w tym celu wartości liczbowych.");
                 }
             }
             while (!userInput);
-            
-            // Instrukcja warunkowa zawierająca metodę która sprawdza czy dany rok jest rokiem przestępnym. Użyłem metody systemowej ale zdaję sobie
-            // również sprawę że można to napisać w postaci warunków logicznych.
-            if (DateTime.IsLeapYear(someYear))
+
+            // Instrukcja warunkowa sprawdzająca czy dany rok jest rokiem przestępnym.
+            switch (someYear)
             {
-                Console.WriteLine($"Rok \"{someYear}\" jest rokiem przestępnym.");
-            }
-            else
-            {
-                Console.WriteLine($"Rok \"{someYear}\" nie jest rokiem przestępnym.");
+                case int when (someYear % 4 == 0 && someYear % 100 >= 1 ) || (someYear % 400 == 0):
+                    Console.WriteLine($"Rok \"{someYear}\" jest rokiem przestępnym.");
+                    break;
+                case int when ((someYear % 4 >= 1 && someYear % 100 == 0) || (someYear % 400 >= 1)) || (someYear % 4 == 0 && someYear % 100 == 0):
+                    Console.WriteLine($"Rok \"{someYear}\" nie jest rokiem przestępnym.");
+                    break;
+                default:
+                    Console.WriteLine("Wprowadzono błędne dane, proszę o wprowadzenie poprawnych danych.");
+                    break;
             }
         }
     }
