@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Numerics;
+using System.Reflection.Metadata;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -17,98 +19,102 @@ namespace Program_10
 
             // Zadeklarowanie zmiennych które będziemy sprawdzać oraz stworzenie pętli pozyskującej informację od użytkownika. Dodatkowo pętla ma 
             // możliwość filtrowania wprowadzonych danych pod kątem ujemych wartości.
+            
             double A;
             double B;
             double C;
 
-            bool userInput = false;
+            bool inputData = false;
             do
             {
-                Console.WriteLine("Witaj w programie w którym sprawdzisz czy z podanych przez Ciebie boków jesteśmy w stanie zbudować trójkąt. " +
-                    "Aby kontynuować, wprowadz cyfrę reprezentującą interesującą cię długość odcinka, a następnie naciśnij klawisz \"ENTER\". " +
+                Console.WriteLine("Aby kontynuować, wprowadz cyfrę reprezentującą długość odcinka który cię interesuje, a następnie naciśnij klawisz \"ENTER\". " +
                     "Powtórz czynność trzykrotnie aby wprowadzić wszystkie wymagane dane.");
                 // Pętla zagnieżdżona dla odcinka "A".
                 do
                 {
-                    userInput = double.TryParse(Console.ReadLine(), out A);
+                    inputData = double.TryParse(Console.ReadLine(), out A);
                     if (A < 0)
                     {
                         Console.WriteLine("Ujemne długości odcinków nie mogą stworzyć figury geometrycznej, wprowadź długość odcinka ponownie, " +
                             "tym razem używając wartości dodatnich.");
                     }
                 }
-                while ((A < 0));
+                while (A < 0);
                 // Pętla zagnieżdżona dla odcinka "B".
                 do
                 {
-                    userInput = double.TryParse(Console.ReadLine(), out B);
+                    inputData = double.TryParse(Console.ReadLine(), out B);
                     if (B < 0)
                     {
                         Console.WriteLine("Ujemne długości odcinków nie mogą stworzyć figury geometrycznej, wprowadź długość odcinka ponownie, " +
                             "tym razem używając wartości dodatnich.");
                     }
                 }
-                while ((B < 0));
+                while (B < 0);
                 // Pętla zagnieżdżona dla odcinka "C".
                 do
                 {
-                    userInput = double.TryParse(Console.ReadLine(), out C);
+                    inputData = double.TryParse(Console.ReadLine(), out C);
                     if (C < 0)
                     {
                         Console.WriteLine("Ujemne długości odcinków nie mogą stworzyć figury geometrycznej, wprowadź długość odcinka ponownie, " +
                             "tym razem używając wartości dodatnich.");
                     }
                 }
-                while ((C < 0));
+                while (C < 0);
               
-                if (!userInput)
+                if (!inputData)
                 {
                     Console.WriteLine("Wprowadzona wartość nie jest wartością liczbową, ponów próbę używając w tym celu wartości liczbowych.");
                 }
             }
-            while (!userInput);
+            while (!inputData);
 
-            // Instrukcja warunkowa decydująca o tym czy można zbudować trójkąt z podanych przez użytkownika długości odcinków. Spersonalizowana 
-            // pod kątem najdłuższego odcinka.
+            // Instrukcja warunkowa decydująca o tym czy można zbudować trójkąt z podanych przez użytkownika długości.
 
-            // Część instrukcji wykonywana jeśli odcinek "A" jest najdłuższy.
-            if ((A > B && A > C || A == B && B == C))
+            // Odcinek "A" jest najdłuższy.
+            if (A > B && A > C)
             {
                 if (C + B > A)
                 {
                     Console.WriteLine("Można zbudować trójkąt.");
                 }
-                else if ((C + B < A || C + B == A) || (C + B == A || (A == B && C < A || C < B)))
+                else if (C + B <= A)
                 {
                     Console.WriteLine("Nie można zbudować trójkąta.");
                 }
             }
-            // Część instrukcji wykonywana jeśli odcinek "B" jest najdłuższy.
-            else if ((B > C && B > A || B == A && A == C))
+            // Odcinek "B" jest najdłuższy.
+            else if (B > C && B > A)
             {
                 if (C + A > B)
                 {
                     Console.WriteLine("Można zbudować trójkąt.");
                 }
-                else if ((C + A < B || A + C == B) || (A + C == B || (B == C && A < B || A < C)))
+                else if (C + A <= B)
                 {
                     Console.WriteLine("Nie można zbudować trójkąta.");
                 }
             }
-            // Część instrukcji wykonywana jeśli odcinek "C" jest najdłuższy.
-            else if ((C > B && C > A || C == B && B == A))
+            // Odcinek "C" jest najdłuższy.
+            else if (C > B && C > A)
             {
                 if (A + B > C)
                 {
                     Console.WriteLine("Można zbudować trójkąt.");
                 }
-                else if ((A + B < C || A + B == C) || (A + B == C || (A == C && B < A || B < C)))
+                else if (A + B <= C)
                 {
                     Console.WriteLine("Nie można zbudować trójkąta.");
                 }
             }
-            // Część instrukcji wykonywana jeśli wszystkie odcinki są równe czyli występuje przypadek trójkąta równobocznego. 
+            // Wszystkie odcinki są równe - występuje przypadek trójkąta równobocznego.
             else if (A == B && B == C)
+            {
+                Console.WriteLine("Można zbudować trójkąt.");
+            }
+            // 2 z 3 odcinków są równe a ostatnia długość jest najmniejsza.
+            else if ((A == B && C < A || C < B) || ((B == C && A < B || A < C) || (A == C && B < A || B < C)))
             {
                 Console.WriteLine("Można zbudować trójkąt.");
             }
