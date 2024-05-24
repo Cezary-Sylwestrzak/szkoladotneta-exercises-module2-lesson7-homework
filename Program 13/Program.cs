@@ -38,7 +38,7 @@ namespace Program_13
             }
             while (firstValue == null || secondValue == null);
 
-            // Wypisanie możliwości oraz wybór operacji przez użytkownika.
+            // Wypisanie możliwości oraz wybór operacji przez użytkownika z uwzględnieniem przypadku niedozwolonego dzielenia przez zero. 
             
             Console.WriteLine(string.Empty);
             
@@ -53,9 +53,20 @@ namespace Program_13
 
             Console.WriteLine(string.Empty);
 
-            userInput = double.Parse(Console.ReadLine());
+            do
+            {
+                userInput = double.Parse(Console.ReadLine());
 
-            Console.WriteLine(string.Empty);
+                Console.WriteLine(string.Empty);
+
+                if ((firstValue == 0 || secondValue == 0) && userInput == 4)
+                {
+                    Console.WriteLine("Niedozwolona operacja! Nie można dzielić przez zero. Ponów wybór, tym razem wybierając operację możliwą do wykonania.");
+                    
+                    Console.WriteLine(string.Empty);
+                }
+            }
+            while ((firstValue == 0 || secondValue == 0) && userInput == 4);
 
             // Instrukcja warunkowa uruchamiająca daną operację matematyczną na podstawie wyboru użytkownika.
             switch (userInput)
