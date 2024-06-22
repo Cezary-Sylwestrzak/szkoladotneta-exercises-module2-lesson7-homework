@@ -20,58 +20,73 @@ namespace Program_13
             // …
             //Twój wynik to:
 
-            // Pętla pobierająca od użytkownika wartości liczby pierwszej oraz drugiej. 
+            // Deklaracja zmiennych oraz pętla pobierająca od użytkownika wartości na których będziemy pracowali. 
             double firstValue;
             double secondValue;
-            double userInput;
+            double choiceOfOperation;
+
+            bool userInputOne = false;
+            bool userInputTwo = false;
             do
             {
                 Console.WriteLine("Podaj pierwszą liczbę.");
-
-                double.TryParse(Console.ReadLine(), out firstValue);
+                userInputOne = double.TryParse(Console.ReadLine(), out firstValue);
 
                 Console.WriteLine(string.Empty);
 
                 Console.WriteLine("Podaj drugą liczbę.");
-
-                double.TryParse(Console.ReadLine(), out secondValue);
-            }
-            while (firstValue == null || secondValue == null);
-
-            // Wypisanie możliwości oraz wybór operacji przez użytkownika z uwzględnieniem przypadku niedozwolonego dzielenia przez zero. 
-            
-            Console.WriteLine(string.Empty);
-            
-            Console.WriteLine("Wybierz operację do wykonania. Wprowadź liczbę odpowiadającą operacji która cię interesuje.");
-            
-            Console.WriteLine(string.Empty);
-            
-            Console.WriteLine("1.Dodawanie.");
-            Console.WriteLine("2.Odejmowanie.");
-            Console.WriteLine("3.Mnożenie.");
-            Console.WriteLine("4.Dzielenie.");
-
-            Console.WriteLine(string.Empty);
-
-            do
-            {
-                userInput = double.Parse(Console.ReadLine());
+                userInputTwo = double.TryParse(Console.ReadLine(), out secondValue);
 
                 Console.WriteLine(string.Empty);
 
-                if ((firstValue == 0 || secondValue == 0) && userInput == 4)
+                if (!userInputOne || !userInputTwo)
+                {
+                    Console.WriteLine("Wprowadzona wartość nie jest wartością liczbową, ponów próbę używając w tym celu wartości liczbowych.");
+                }
+            }
+            while (!userInputOne || !userInputTwo);
+
+            // Pętla z menu możliwych operacji do wyboru. 
+            bool userInputThree = false;
+            do
+            {
+                Console.WriteLine("Wybierz operację do wykonania. Wprowadź liczbę odpowiadającą operacji która cię interesuje.");
+
+                Console.WriteLine(string.Empty);
+
+                Console.WriteLine("1.Dodawanie.");
+                Console.WriteLine("2.Odejmowanie.");
+                Console.WriteLine("3.Mnożenie.");
+                Console.WriteLine("4.Dzielenie.");
+
+                Console.WriteLine(string.Empty);
+
+                userInputThree = double.TryParse(Console.ReadLine(), out choiceOfOperation);
+
+                if (choiceOfOperation == 4 && (firstValue == 0 || secondValue == 0))
                 {
                     Console.WriteLine("Niedozwolona operacja! Nie można dzielić przez zero. Ponów wybór, tym razem wybierając operację możliwą do wykonania.");
-                    
+                    Console.WriteLine(string.Empty);
+                }
+                else if (!userInputThree)
+                {
+                    Console.WriteLine("Wprowadzona wartość nie jest wartością liczbową, ponów próbę używając w tym celu wartości liczbowych.");
+                    Console.WriteLine(string.Empty);
+                }
+                else if (choiceOfOperation < 0)
+                {
+                    Console.WriteLine("Wprowadzono błędne dane, ponów próbę.");
                     Console.WriteLine(string.Empty);
                 }
             }
-            while ((firstValue == 0 || secondValue == 0) && userInput == 4);
+            while ((choiceOfOperation == 4 && (firstValue == 0 || secondValue == 0) || !userInputThree) || choiceOfOperation < 0);
+
+            Console.WriteLine(string.Empty);
 
             // Instrukcja warunkowa uruchamiająca daną operację matematyczną na podstawie wyboru użytkownika.
-            switch (userInput)
+            switch (choiceOfOperation)
             {
-                case 1 :
+                case 1:
                     double sumOfNumbers = firstValue + secondValue;
                     Console.WriteLine($"Twój wynik to: {sumOfNumbers}.");
                     break;
@@ -91,6 +106,8 @@ namespace Program_13
                     Console.WriteLine("Wprowadzono błędne dane, ponów wybór operacji zawężając liczby do zakresu 1 - 4.");
                     break;
             }
+            
+            Console.ReadLine();
         }
     }
 }           

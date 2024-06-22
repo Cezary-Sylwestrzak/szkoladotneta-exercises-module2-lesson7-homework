@@ -13,8 +13,9 @@ namespace Program_5
             //Rezultat w terminalu:
             //Możesz zostać posłem
 
-            // Pętla pobierająca od użytkownika wartość którą będziemy sprawdzali.
-            int ageToCheck;
+            // Deklaracja zmiennej oraz pętla pobierająca od użytkownika wartość którą będziemy sprawdzali.
+            int ageToCheck; 
+
             bool userInput = false;
             do
             {
@@ -22,43 +23,46 @@ namespace Program_5
 
                 userInput = int.TryParse(Console.ReadLine(), out ageToCheck);
 
-                if(!userInput)
+                if(!userInput || ageToCheck < 0)
                 {
-                    Console.WriteLine("Wprowadzona wartość nie jest wartością liczbową, ponów próbę używając w tym celu wartości liczbowych.");
+                    Console.WriteLine("Wprowadzono błędne dane, ponów próbę.");
                 }
             }
-            while (!userInput);
+            while (!userInput || ageToCheck < 0);
 
-            // Instrukcja warunkowa sprawdzająca jakie stanowiska możemy zajmować z naszym wiekiem. 
-            if (ageToCheck >= 21 & ageToCheck < 30)
+            // Instrukcja warunkowa sprawdzająca jakie stanowiska możemy zajmować względem podanego wieku.  
+            if (ageToCheck > 17)  
             {
-                Console.WriteLine("Możesz zostać posłem.");
-                Console.WriteLine("Możesz zostać premierem.");
-                Console.WriteLine("Nie możesz zostać senatorem.");
-                Console.WriteLine("Nie możesz zostać prezydentem.");
-            }
-            else if (ageToCheck >= 30 & ageToCheck < 35)
-            {
-                Console.WriteLine("Możesz zostać posłem.");
-                Console.WriteLine("Możesz zostać premierem.");
-                Console.WriteLine("Możesz zostać senatorem.");
-                Console.WriteLine("Nie możesz zostać prezydentem.");
-            }
-            else if (ageToCheck >= 35)
-            {
-                Console.WriteLine("Możesz zostać posłem.");
-                Console.WriteLine("Możesz zostać premierem.");
-                Console.WriteLine("Możesz zostać senatorem.");
-                Console.WriteLine("Możesz zostać prezydentem.");
-            }
-            else if (ageToCheck >= 18 & ageToCheck < 21)
-            {
-                Console.WriteLine("Użytkownik nie spełnia wymagań dotyczących wieku w żadnym przypadku i nie może ubiegać się o żadne stanowisko.");
+                if (ageToCheck > 20) 
+                {
+                    if (ageToCheck > 29) 
+                    {
+                        if (ageToCheck > 34)
+                        {
+                            Console.WriteLine("Możesz zostać posłem, premierem, senatorem albo prezydentem.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Możesz zostać posłem, premierem albo senatorem.");
+                        }
+
+                    }
+                    else  
+                    {
+                        Console.WriteLine("Możesz zostać posłem albo premierem.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Użytkownik nie spełnia wymagań dotyczących wieku w żadnym przypadku i nie może ubiegać się o żadne stanowisko.");
+                }
             }
             else
             {
                 Console.WriteLine("Osoby niepełnoletnie nie mogą brać udziału w wyborach. Wracaj do szkoły!");
             }
+            
+            Console.ReadLine();
         }
     }
 }

@@ -12,38 +12,37 @@ namespace Program_4
             //Rezultat w terminalu:
             //2016 jest rokiem przestępnym
 
-            // Pętla pobierająca informację na temat roku który chcemy sprawdzić.
+            // Inicjalizacja zmiennej oraz pętla pobierająca od użytkownika informację który rok chce sprawdzić.
             int someYear;
+
             bool userInput = false;
             do
             {
-                Console.WriteLine("Aby sprawdzić czy dany rok jest przestęny, podaj wartość reprezentującą intresujący cię rok " +
-                    "po czym naciśnij klawisz \"ENTER\".");
+                Console.WriteLine("Aby sprawdzić czy dany rok jest przestępny, wprowadź wartość reprezentującą intresujący cię rok " +
+                    "po czym naciśnij klawisz\"ENTER\".");
 
                 userInput = int.TryParse(Console.ReadLine(), out someYear);
 
                 Console.WriteLine(string.Empty);
 
-                if (!userInput)
+                if (!userInput || someYear < 0)
                 {
-                    Console.WriteLine("Wprowadzona wartość nie jest wartością liczbową, ponów próbę używając w tym celu wartości liczbowych.");
-                }
+                    Console.WriteLine("Wprowadzono błędne dane, ponów próbę.");
+                } 
             }
-            while (!userInput);
+            while (!userInput || someYear < 0);
 
             // Instrukcja warunkowa sprawdzająca czy dany rok jest rokiem przestępnym.
-            switch (someYear)
+            if ((someYear % 4 != 0) || ((someYear % 4 == 0 && someYear % 100 == 0) && (someYear % 400 != 0))) 
             {
-                case int when (someYear % 4 == 0 && someYear % 100 >= 1 ) || (someYear % 400 == 0):
-                    Console.WriteLine($"Rok \"{someYear}\" jest rokiem przestępnym.");
-                    break;
-                case int when ((someYear % 4 >= 1 && someYear % 100 == 0) || (someYear % 400 >= 1)) || (someYear % 4 == 0 && someYear % 100 == 0):
-                    Console.WriteLine($"Rok \"{someYear}\" nie jest rokiem przestępnym.");
-                    break;
-                default:
-                    Console.WriteLine("Wprowadzono błędne dane, proszę o wprowadzenie poprawnych danych.");
-                    break;
+                Console.WriteLine($"Rok \"{someYear}\" nie jest rokiem przestępnym.");
             }
+            else if ((someYear % 4 == 0 && someYear % 100 != 0) || ((someYear % 4 == 0 && someYear % 100 == 0) && (someYear % 400 == 0)))
+            {
+                Console.WriteLine($"Rok \"{someYear}\" jest rokiem przestępnym.");
+            }
+            
+            Console.ReadLine();
         }
     }
 }
